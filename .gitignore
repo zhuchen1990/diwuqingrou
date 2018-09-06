@@ -105,3 +105,27 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+.idea/
+Include/
+Scripts/Activate.ps1
+Scripts/activate
+Scripts/activate.bat
+Scripts/automat-visualize.exe
+Scripts/deactivate.bat
+Scripts/easy_install-3.7.exe
+Scripts/easy_install.exe
+Scripts/libcrypto-1_1.dll
+Scripts/libssl-1_1.dll
+Scripts/pip.exe
+Scripts/pip3.7.exe
+Scripts/pip3.exe
+Scripts/python.exe
+Scripts/python3.dll
+Scripts/python37.dll
+Scripts/pythonw.exe
+Scripts/sqlite3.dll
+Scripts/tcl86t.dll
+Scripts/tk86t.dll
+Scripts/vcruntime140.dll
+pip-selfcheck.json
+pyvenv.cfg
