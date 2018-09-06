@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-emr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emr
+  template:
+    metadata:
+      labels:
+        app: emr
+    spec:
+      containers:
+      - name: app-emr
+        image: 192.168.145.132:5000/emr:1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        command: ["./usr/local/apache-tomcat-8.5.23/bin/catalina.sh","run"]

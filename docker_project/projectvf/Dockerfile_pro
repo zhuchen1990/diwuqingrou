@@ -1,0 +1,16 @@
+
+FROM scratch
+ADD centos-7-docker.tar.xz /
+ADD ./jdk-8u151-linux-x64.tar.gz  /usr/local/
+ADD ./provider.tar.gz     /usr/local/
+
+LABEL org.label-schema.schema-version = "1.0" \
+    org.label-schema.name="CentOS Base Image" \
+    org.label-schema.vendor="CentOS" \
+    org.label-schema.license="GPLv2" \
+    org.label-schema.build-date="20180531"
+ENV JAVA_HOME /usr/local/jdk1.8.0_151
+ENV CLASSPATH .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+ENV PATH $JAVA_HOME/bin:$PATH
+
+CMD ["/bin/bash"]

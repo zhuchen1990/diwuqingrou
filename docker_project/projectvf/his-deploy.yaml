@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-his
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: his
+  template:
+    metadata:
+      labels:
+        app: his
+    spec:
+      containers:
+      - name: app-his
+        image: 192.168.145.132:5000/his:1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+        command: ["./usr/local/apache-tomcat-8.5.23/bin/catalina.sh","run"]

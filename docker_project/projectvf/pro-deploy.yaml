@@ -1,0 +1,36 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-provider
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: provider
+  template:
+    metadata:
+      labels:
+        app: provider
+    spec:
+      containers:
+      - name: app-provider
+        image: 192.168.145.132:5000/pro:1.1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: ORACLE_HOST
+          value: '7.0.0.13'
+        - name: ZOOKEEPER_HOST
+          value: 'diwuqingrou-n1,diwuqingrou-n2,diwuqingrou-n3'
+        - name: MONGO_HOST
+          value: '7.0.0.13'
+        - name: JAVA_OPTS
+          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+        command: ["java","-jar","/usr/local/provider/nebula-provider.jar"]
+#        resources:
+#          requests:
+#            memory: "1Gi"
+#            cpu: "500m"
+#          limits:
+#            memory: "1Gi"
+#            cpu: "500m"
+

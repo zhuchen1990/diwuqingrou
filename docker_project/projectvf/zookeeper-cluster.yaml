@@ -1,0 +1,233 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: diwuqingrou-n1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diwuqingrou-n1
+  template:
+    metadata:
+      labels:
+        app: diwuqingrou-n1
+    spec:
+      hostname: diwuqingrou-n1
+      volumes:
+        - name: diwuqingrou-data
+          hostPath: 
+            path: /data/diwuqingrou-cluster/diwuqingrou-data-n1
+        - name: diwuqingrou-logs
+          hostPath: 
+            path: /data/diwuqingrou-cluster/diwuqingrou-logs-n1
+      dnsPolicy: ClusterFirst
+      containers:
+      - name: diwuqingrou-n1
+        image: zookeeper
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: diwuqingrou-data
+          readOnly: false
+          mountPath: "/data/diwuqingrou-data"
+        - name: diwuqingrou-logs
+          readOnly: false
+          mountPath: "/data/diwuqingrou-logs"
+        ports:
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+        #command: ['tail', '-f', '/etc/hosts']  
+        env:
+        - name: ZOO_MY_ID
+          value: "1"
+        - name: ZOO_SERVERS
+          value: server.1=diwuqingrou-n1:2888:3888 server.2=diwuqingrou-n2:2888:3888 server.3=diwuqingrou-n3:2888:3888
+        - name: ZOO_DATA_DIR
+          value: '/data/diwuqingrou-data'
+        - name: ZOO_DATA_LOG_DIR
+          value: '/data/diwuqingrou-logs'  
+
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: diwuqingrou-n2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diwuqingrou-n2
+  template:
+    metadata:
+      labels:
+        app: diwuqingrou-n2
+    spec:
+      hostname: diwuqingrou-n2
+      volumes:
+        - name: diwuqingrou-data
+          hostPath: 
+            path: /data/diwuqingrou-cluster/diwuqingrou-data-n2
+        - name: diwuqingrou-logs
+          hostPath: 
+            path: /data/diwuqingrou-cluster/diwuqingrou-logs-n2
+      dnsPolicy: ClusterFirst
+      containers:
+      - name: diwuqingrou-n2
+        image: zookeeper
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: diwuqingrou-data
+          readOnly: false
+          mountPath: "/data/diwuqingrou-data"
+        - name: diwuqingrou-logs
+          readOnly: false
+          mountPath: "/data/diwuqingrou-logs"
+        ports:
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+        #command: ['tail', '-f', '/etc/hosts']  
+        env:
+        - name: ZOO_MY_ID
+          value: "2"
+        - name: ZOO_SERVERS
+          value: server.1=diwuqingrou-n1:2888:3888 server.2=diwuqingrou-n2:2888:3888 server.3=diwuqingrou-n3:2888:3888
+        - name: ZOO_DATA_DIR
+          value: '/data/diwuqingrou-data'
+        - name: ZOO_DATA_LOG_DIR
+          value: '/data/diwuqingrou-logs'  
+
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: diwuqingrou-n3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diwuqingrou-n3
+  template:
+    metadata:
+      labels:
+        app: diwuqingrou-n3
+    spec:
+      hostname: diwuqingrou-n3
+      volumes:
+        - name: diwuqingrou-data
+          hostPath: 
+            path: /data/diwuqingrou-cluster/diwuqingrou-data-n3
+        - name: diwuqingrou-logs
+          hostPath: 
+            path: /data/diwuqingrou-cluster/diwuqingrou-logs-n3
+      dnsPolicy: ClusterFirst
+      containers:
+      - name: diwuqingrou-n3
+        image: zookeeper
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: diwuqingrou-data
+          readOnly: false
+          mountPath: "/data/diwuqingrou-data"
+        - name: diwuqingrou-logs
+          readOnly: false
+          mountPath: "/data/diwuqingrou-logs"
+        ports:
+        - containerPort: 2181
+        - containerPort: 2888
+        - containerPort: 3888
+        #command: ['tail', '-f', '/etc/hosts']  
+        env:
+        - name: ZOO_MY_ID
+          value: "3"
+        - name: ZOO_SERVERS
+          value: server.1=diwuqingrou-n1:2888:3888 server.2=diwuqingrou-n2:2888:3888 server.3=diwuqingrou-n3:2888:3888
+        - name: ZOO_DATA_DIR
+          value: '/data/diwuqingrou-data'
+        - name: ZOO_DATA_LOG_DIR
+          value: '/data/diwuqingrou-logs' 
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: diwuqingrou-n1
+  name: diwuqingrou-n1
+  namespace: default
+spec:
+  clusterIP: None
+  ports:
+  - port: 2181
+    protocol: TCP
+    targetPort: 2181
+    name: client
+  - port: 2888
+    protocol: TCP
+    targetPort: 2888
+    name: leader
+  - port: 3888
+    protocol: TCP
+    targetPort: 3888
+    name: leader-election
+  selector:
+    app: diwuqingrou-n1
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: diwuqingrou-n2
+  name: diwuqingrou-n2
+  namespace: default
+spec:
+  clusterIP: None
+  ports:
+  - port: 2181
+    protocol: TCP
+    targetPort: 2181
+    name: client
+  - port: 2888
+    protocol: TCP
+    targetPort: 2888
+    name: leader
+  - port: 3888
+    protocol: TCP
+    targetPort: 3888
+    name: leader-election
+  selector:
+    app: diwuqingrou-n2
+  sessionAffinity: None
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: diwuqingrou-n3
+  name: diwuqingrou-n3
+  namespace: default
+spec:
+  clusterIP: None
+  ports:
+  - port: 2181
+    protocol: TCP
+    targetPort: 2181
+    name: client
+  - port: 2888
+    protocol: TCP
+    targetPort: 2888
+    name: leader
+  - port: 3888
+    protocol: TCP
+    targetPort: 3888
+    name: leader-election
+  selector:
+    app: diwuqingrou-n3
+  sessionAffinity: None
+  type: ClusterIP
