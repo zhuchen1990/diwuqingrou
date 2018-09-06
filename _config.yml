@@ -16,3 +16,5 @@ exclude: ['README.md']
 
 # Build settings
 markdown: kramdown
+
+theme: jekyll-theme-merlot
