@@ -11,7 +11,7 @@ from openpyxl import Workbook
 写入目录:当前目录
 """
 wb = Workbook()
-dest_filename = '电影.xlsx'
+dest_filename = 'mv.xlsx'
 ws1 = wb.active
 ws1.title = "电影top250"
 
