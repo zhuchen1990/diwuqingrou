@@ -24,7 +24,6 @@
 
 ![图片](https://ws2.sinaimg.cn/large/9150e4e5ly1fhx5kcor4xg207y05mmy4.gif)
 
-
 `print ("pip install scrapy")`
 
 ```python
