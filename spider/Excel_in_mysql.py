@@ -1,39 +1,45 @@
 from openpyxl import load_workbook
 import pymysql
 
+# 将抓取下来的电影写入mysql数据库
 config = {
-    'host': '193.112.69.164',
+    'host': '127.0.0.1',
     'port': 3306,
     'user': 'root',
-    'password': 'qq291394199',
-    'charset': 'utf8mb4',
+    'password': 'root',
+    'charset': 'utf8',
     # 'cursorclass': pymysql.cursors.DictCursor
 
 }
+
 conn = pymysql.connect(**config)
+
 conn.autocommit(1)
+
 cursor = conn.cursor()
-name = 'yhexcel'
-cursor.execute('create database if not exists %s' % name)
+
+name = 'douban_top_250'
+
+cursor.execute('create database if not exists %s CHARACTER SET utf8 COLLATE utf8_general_ci' % name)
+
 conn.select_db(name)
+
 table_name = 'info'
+
 cursor.execute(
-    'create table if not exists %s(name varchar(30),star_con varchar(30),score varchar(30),info_list varchar(30))' % table_name)
+    'create table if not exists %s(m_id int(10) not null auto_increment primary key,name varchar(255),star_con varchar(255),score varchar(255),info_list varchar(255))' % table_name)
 
 wb2 = load_workbook('mv.xlsx')
-ws = wb2.get_sheet_names()
-for row in wb2:
-    print("1")
-    for cell in row:
-        # BUG
-        value1 = (cell[0].value, cell[4].value)
-        value2 = (cell[0].value, cell[3].value)
-        value3 = (cell[0].value, cell[3].value)
-        value4 = (cell[0].value, cell[3].value)
-        cursor.execute('insert into info (name,star_con,score,info_lis) values(%s,%s,%s,%s)', value1, value2, value3,
-                       value4)
 
-print("overing...")
-# for row in A:
-# 	print(row)
-# print (wb2.get_sheet_names())
+ws = wb2.sheetnames
+
+for row in wb2:
+    for cell in row:
+        info_name = cell[0].value
+        info_star_con = cell[1].value
+        info_score = cell[2].value
+        info_info_list = cell[3].value
+        sql = """INSERT INTO info(name, star_con, score, info_list) VALUES ('%s', '%s', '%s', '%s' )""" % (
+            info_name, info_star_con, info_score, info_info_list)
+        print(sql)
+        cursor.execute(sql)
