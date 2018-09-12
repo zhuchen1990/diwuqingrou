@@ -130,3 +130,9 @@ Scripts/vcruntime140.dll
 pip-selfcheck.json
 pyvenv.cfg
 
+tutorial/author.jl
+tutorial/cnblog.txt
+tutorial/quotes-1.html
+tutorial/quotes-2.html
+tutorial/quotes.jl
+
