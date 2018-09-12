@@ -24,6 +24,8 @@
 
 ![图片](https://ws2.sinaimg.cn/large/9150e4e5ly1fhx5kcor4xg207y05mmy4.gif)
 
+~~这是大佬的博客,我错了，我不是！~~
+
 `print ("pip install scrapy")`
 
 ```python
@@ -46,4 +48,3 @@ class BlogSpider(scrapy.Spider):
 
 _纵然万劫不复，纵然相思入骨，我也待你眉眼如初，岁月如故。_
 
-~~这是大佬的博客,我错了，我不是！~~
