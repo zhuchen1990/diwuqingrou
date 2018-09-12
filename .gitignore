@@ -129,16 +129,4 @@ Scripts/tk86t.dll
 Scripts/vcruntime140.dll
 pip-selfcheck.json
 pyvenv.cfg
-tutorial/author.jl
-tutorial/cnblog.txt
-tutorial/quotes-1.html
-tutorial/quotes-2.html
-tutorial/quotes.jl
-tutorial/scrapy.cfg
-tutorial/tutorial/__init__.py
-tutorial/tutorial/cnblog.txt
-tutorial/tutorial/items.py
-tutorial/tutorial/middlewares.py
-tutorial/tutorial/pipelines.py
-tutorial/tutorial/settings.py
-tutorial/tutorial/spiders/__init__.py
+
