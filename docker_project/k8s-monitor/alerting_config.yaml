@@ -1,0 +1,15 @@
+#Step one: create a secret dictionary
+#kubectl create  secret generic alertmanager-main --from-file=alerting_config.yaml
+#Step tow: Add secret{BASE64_CONFIG} to data:  in alertmanager.yaml
+global:
+  resolve_timeout: 5m
+route:
+  group_by: ['job']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 5m
+  receiver: 'webhook'
+receivers:
+- name: 'webhook'
+  webhook_configs:
+  - url: 'http://192.168.145.1:8080/WebHookTest/'
