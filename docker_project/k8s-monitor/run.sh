@@ -65,6 +65,9 @@ kubectl create  secret generic alertmanager-main --from-file=alerting_config.yam
 cat alertmanager.yaml | base64
 
 # 将加密后的数据添加到alertmanager.yaml
+alert=$(cat alertmanager.yaml | base64)
+
+sed  "s/alertmanager.yaml: /& `alert`/" alertmanager.yaml
 
 kubectl apply -f alertmanager.yaml
 
@@ -75,3 +78,4 @@ kubectl get svc -n monitoring
 # 查看 node port
 
 kubectl get svc -n monitoring | grep alertmanager-main
+
