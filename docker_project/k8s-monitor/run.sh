@@ -62,12 +62,9 @@ EOF
 
 kubectl create  secret generic alertmanager-main --from-file=alerting_config.yaml
 
-cat alertmanager.yaml | base64
+# 这里可以查看下base64压缩后的alerting_config.yaml和alertmanager.yaml中的data是否一致
 
-# 将加密后的数据添加到alertmanager.yaml
-alert=$(cat alertmanager.yaml | base64)
-
-sed  "s/alertmanager.yaml: /& `alert`/" alertmanager.yaml
+cat alerting_config.yaml | base64
 
 kubectl apply -f alertmanager.yaml
 

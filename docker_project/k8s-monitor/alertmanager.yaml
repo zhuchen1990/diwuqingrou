@@ -7,7 +7,7 @@ metadata:
 ---
 apiVersion: v1
 data:
-  alertmanager.yaml:
+  alertmanager.yaml: Z2xvYmFsOgogIHJlc29sdmVfdGltZW91dDogNW0Kcm91dGU6CiAgZ3JvdXBfYnk6IFsnam9iJ10KICBncm91cF93YWl0OiAzMHMKICBncm91cF9pbnRlcnZhbDogNW0KICByZXBlYXRfaW50ZXJ2YWw6IDVtCiAgcmVjZWl2ZXI6ICd3ZWJob29rJwpyZWNlaXZlcnM6Ci0gbmFtZTogJ3dlYmhvb2snCiAgd2ViaG9va19jb25maWdzOgogIC0gdXJsOiAnaHR0cDovLzE5Mi4xNjguMTQ1LjE6ODA4MC9XZWJIb29rVGVzdC8nCg==
 kind: Secret
 metadata:
   name: alertmanager-main

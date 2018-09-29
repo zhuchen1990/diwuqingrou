@@ -3,8 +3,11 @@ import json
 from flask import Flask
 from flask import request
 
-app = Flask(__name__)
+###########################
+# prometheus向企业微信推送消息#
+###########################
 
+app = Flask(__name__)
 
 # --------------------------------
 # 获取企业微信token
