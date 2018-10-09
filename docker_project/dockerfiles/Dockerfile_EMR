@@ -1,3 +1,9 @@
+##需修改./WEB-INF/classes/jdbc.properties
+#制作镜像
+#docker build -t chngenesis/emr:1.0 .
+#运行容器
+#docker run -dit -p 8082:8080 --name emr --link=zoo_1.0 chngenesis/emr:1.0
+
 FROM scratch
 ADD centos-7-docker.tar.xz /
 
@@ -10,11 +16,11 @@ ENV CLASSPATH .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ENV PATH $JAVA_HOME/bin:$PATH
 ENV CATALINA_HOME /usr/local/apache-tomcat-8.5.23
 ENV PATH $PATH:$CATALINA_HOME/bin
-
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 LABEL org.label-schema.schema-version = "1.0" \
     org.label-schema.name="CentOS Base Image" \
     org.label-schema.vendor="CentOS" \
     org.label-schema.license="GPLv2" \
     org.label-schema.build-date="20180531"
+CMD ["/usr/local/apache-tomcat-8.5.23/bin/catalina.sh", "run"]
 
-CMD ["/bin/bash"]

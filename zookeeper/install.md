@@ -18,7 +18,7 @@ server.3=node2:2888:3888
 * 在/usr/local/zookeeper/Data目录下创建一个myid的文件
 
 `cat >> myid << EOF
- 1
+ 1 
  EOF`
  
 * 拷贝配置好的zookeeper到其他节点

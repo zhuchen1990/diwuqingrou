@@ -1,3 +1,8 @@
+#需修改./provider.tar/provider/config/config.properties
+#制作镜像
+#docker build -t chngenesis/pro:1.0 .
+#运行容器
+#docker run -dit --name pro --link=zoo_1.0 --link=mongo --link=oracle chngenesis/pro:1.0
 
 FROM scratch
 ADD centos-7-docker.tar.xz /
@@ -12,5 +17,5 @@ LABEL org.label-schema.schema-version = "1.0" \
 ENV JAVA_HOME /usr/local/jdk1.8.0_151
 ENV CLASSPATH .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 ENV PATH $JAVA_HOME/bin:$PATH
-
-CMD ["/bin/bash"]
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+CMD ["java","-jar","/usr/local/provider/nebula-provider.jar"]
