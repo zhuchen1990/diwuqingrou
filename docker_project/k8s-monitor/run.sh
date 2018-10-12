@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#定义报警的webhook
+url=http://192.168.145.1:8080/WebHookTest/
+
 #step 1 创建 namespace
 kubectl apply -f monitoring-namespace.yaml
 #step 2 部署 prometheus-operator
@@ -57,15 +60,82 @@ route:
 receivers:
 - name: 'webhook'
   webhook_configs:
-  - url: 'http://192.168.145.1:8080/WebHookTest/'
+  - url: '$url'
 EOF
 
 kubectl create  secret generic alertmanager-main --from-file=alerting_config.yaml
 
-# 这里可以查看下base64压缩后的alerting_config.yaml和alertmanager.yaml中的data是否一致
+#将压缩过后的配置文件写入到alertmanager.yaml
 
-cat alerting_config.yaml | base64
+baseCode=`cat alerting_config.yaml | base64`
 
+cat >> alertmanager.yaml << EOF
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: alertmanager-main
+  namespace: monitoring
+
+---
+apiVersion: v1
+data:
+  alertmanager.yaml: $baseCode
+kind: Secret
+metadata:
+  name: alertmanager-main
+  namespace: monitoring
+type: Opaque
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  labels:
+    alertmanager: main
+  name: main
+  namespace: monitoring
+spec:
+  baseImage: quay.io/prometheus/alertmanager
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  replicas: 3
+  serviceAccountName: alertmanager-main
+  version: v0.15.0
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    alertmanager: main
+  name: alertmanager-main
+  namespace: monitoring
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    port: 9093
+    targetPort: web
+  selector:
+    alertmanager: main
+    app: alertmanager
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: alertmanager
+  name: alertmanager
+  namespace: monitoring
+spec:
+  endpoints:
+  - interval: 30s
+    port: web
+  selector:
+    matchLabels:
+      alertmanager: main
+EOF
 kubectl apply -f alertmanager.yaml
 
 # 查看

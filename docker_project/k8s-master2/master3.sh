@@ -27,7 +27,7 @@ CP2_HOSTNAME="$lab3"
 cat >kubeadm-master.config<<EOF
 apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
-kubernetesVersion: v1.11.0
+kubernetesVersion: v1.12.0
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 
 apiServerCertSANs:

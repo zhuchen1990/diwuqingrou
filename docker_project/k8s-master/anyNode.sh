@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #网卡
-interface=eth1
+interface=em1
 
 rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
