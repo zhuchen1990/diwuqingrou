@@ -14,11 +14,11 @@ spec:
     spec:
       containers:
       - name: app-his
-        image: 192.168.145.132:5000/his:1.1
+        image: 192.168.145.132:5000/chngenesis/his:1.0
         imagePullPolicy: IfNotPresent
         env:
         - name: ZOOKEEPER_HOST
-          value: 'diwuqingrou-n1,diwuqingrou-n2,diwuqingrou-n3'
+          value: 'zookeeper-n1,zookeeper-n2,zookeeper-n3'
         ports:
           - containerPort: 8080
         command: ["./usr/local/apache-tomcat-8.5.23/bin/catalina.sh","run"]

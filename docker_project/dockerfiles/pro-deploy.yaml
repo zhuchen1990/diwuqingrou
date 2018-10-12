@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
       - name: app-provider
-        image: 192.168.145.132:5000/pro:1.1
+        image: 192.168.145.132:5000/chngenesis/pro:1.0
         imagePullPolicy: IfNotPresent
         env:
         - name: ORACLE_HOST
           value: '7.0.0.13'
         - name: ZOOKEEPER_HOST
-          value: 'diwuqingrou-n1,diwuqingrou-n2,diwuqingrou-n3'
+          value: 'zookeeper-n1,zookeeper-n2,zookeeper-n3'
         - name: MONGO_HOST
           value: '7.0.0.11'
         - name: JAVA_OPTS

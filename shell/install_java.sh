@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+java -version
+if [ $? -eq 0 ]; then
+ read -p "The JDK already exists, do you need to continue to install it?(y/n) " name
+ if [ "n" = "$name" ]; then
+  exit 0
+ fi
+fi
 
 #解压java
 tar -zxvf jdk-8u151-linux-x64.tar.gz -C /usr/local/
