@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 ####################################
 #主机ip
-master1=7.0.0.20
-master2=7.0.0.21
-master3=7.0.0.22
+master1=192.168.145.145
+master2=192.168.145.146
+master3=192.168.145.147
 #虚拟ip
-vip=7.0.0.23
+vip=192.168.145.148
 #主机名
 lab1=`ssh $master1 hostname`
 lab2=`ssh $master2 hostname`
 lab3=`ssh $master3 hostname`
 #网卡
-interface=em1
+interface=ens32
 ###################################
 #配置host解析
 cat >>/etc/hosts<<EOF
