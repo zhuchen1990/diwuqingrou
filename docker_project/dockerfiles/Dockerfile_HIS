@@ -7,8 +7,8 @@
 FROM scratch
 ADD centos-7-docker.tar.xz /
 
-ADD ./apache-tomcat-8.5.23.tar.gz  /usr/local/
 ADD ./jdk-8u151-linux-x64.tar.gz  /usr/local/
+ADD ./apache-tomcat-8.5.23.tar.gz  /usr/local/
 COPY ./StarTrek.war                /usr/local/apache-tomcat-8.5.23/webapps
 
 ENV JAVA_HOME /usr/local/jdk1.8.0_151
