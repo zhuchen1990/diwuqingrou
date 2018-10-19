@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #网卡
-interface=em1
+interface=ens32
 
 rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
