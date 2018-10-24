@@ -43,10 +43,10 @@ docker build -t chngenesis/his:$version /root/project/his/
 docker build -t chngenesis/emr:$version /root/project/emr/
 
 #运行在docker上,这里的zookeeper地址是zoo_$zoo_version
-#docker run -dit --name pro --link=zoo_$zoo_version  chngenesis/pro:$version
+#docker run -dit --name pro --restart=always --link=zoo_$zoo_version  chngenesis/pro:$version
 #sleep 10s
-#docker run -dit -p 8080:8080 --name his --link=zoo_$zoo_version chngenesis/his:$version
-#docker run -dit -p 8082:8080 --name emr --link=zoo_$zoo_version chngenesis/emr:$version
+#docker run -dit -p 8080:8080 --name his --restart=always --link=zoo_$zoo_version chngenesis/his:$version
+#docker run -dit -p 8082:8080 --name emr --restart=always --link=zoo_$zoo_version chngenesis/emr:$version
 
 #上传镜像到私有仓库
 docker tag chngenesis/pro:$version $repository/chngenesis/pro:$version

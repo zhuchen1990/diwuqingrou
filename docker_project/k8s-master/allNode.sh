@@ -164,7 +164,7 @@ lsmod | grep ip_vs
 modprobe ip_vs
 
 # 启动keepalived
-# eth1为本次实验11.11.11.0/24网段的所在网卡
+# $interface为网段的所在网卡
 docker run --net=host --cap-add=NET_ADMIN \
 -e KEEPALIVED_INTERFACE=$interface \
 -e KEEPALIVED_VIRTUAL_IPS="#PYTHON2BASH:['$vip']" \

@@ -1,3 +1,0 @@
-执行顺序:allNode.sh(所有节点)->master1.sh(第一个节点)->master2.sh(第一个节点)->master3.sh(第一个节点)->anyNode.sh(任意节点)
-注意事项:主机IP和网卡需要根据情况而定
-
