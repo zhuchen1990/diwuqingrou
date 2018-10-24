@@ -14,7 +14,7 @@ lab1=`ssh $master1 hostname`
 lab2=`ssh $master2 hostname`
 lab3=`ssh $master3 hostname`
 #网卡
-interface=ens32
+interface=ens33
 ###################################
 # 生成配置文件
 CP0_IP="$master1"
@@ -30,8 +30,8 @@ apiServerCertSANs:
 - "$lab2"
 - "$lab3"
 - "$master1"
-- "$master1"
-- "$master1"
+- "$master2"
+- "$master3"
 - "$vip"
 - "127.0.0.1"
 

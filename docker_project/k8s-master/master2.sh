@@ -13,7 +13,7 @@ lab1=`ssh $master1 hostname`
 lab2=`ssh $master2 hostname`
 lab3=`ssh $master3 hostname`
 #网卡
-interface=ens32
+interface=ens33
 ###################################
 
 # 生成配置文件
