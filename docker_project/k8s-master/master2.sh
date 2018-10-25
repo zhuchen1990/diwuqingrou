@@ -77,6 +77,11 @@ kubeadm alpha phase kubelet write-env-file --config kubeadm-master.config
 kubeadm alpha phase kubeconfig kubelet --config kubeadm-master.config
 systemctl restart kubelet
 
+CP0_IP="$master1"
+CP0_HOSTNAME="$lab1"
+CP1_IP="$master2"
+CP1_HOSTNAME="$lab2"
+
 KUBECONFIG=/etc/kubernetes/admin.conf kubectl exec -n kube-system etcd-${CP0_HOSTNAME} -- etcdctl --ca-file /etc/kubernetes/pki/etcd/ca.crt --cert-file /etc/kubernetes/pki/etcd/peer.crt --key-file /etc/kubernetes/pki/etcd/peer.key --endpoints=https://${CP0_IP}:2379 member add ${CP1_HOSTNAME} https://${CP1_IP}:2380
 kubeadm alpha phase etcd local --config kubeadm-master.config
 

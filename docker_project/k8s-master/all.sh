@@ -15,14 +15,10 @@ interface=ens33
 ###################################
 
 
-#Configure host
-cat >>/etc/hosts<<EOF
-$master1  $lab1
-$master2  $lab2
-$master3  $lab3
-EOF
 
-
+###########################
+#Turn off the firewall
+systemctl stop firewalld && systemctl disable firewalld
 
 ######################
 #install docker
@@ -62,9 +58,7 @@ EOF
 # 安装
 yum install -y kubelet kubeadm kubectl ipvsadm
 
-###########################
-#Turn off the firewall
-systemctl stop firewalld && systemctl disable firewalld
+
 
 #配置系统相关参数
 # 临时禁用selinux
@@ -101,11 +95,19 @@ modprobe ip_vs_sh
 modprobe nf_conntrack_ipv4
 lsmod | grep ip_vs
 
+#Configure host
+cat >>/etc/hosts<<EOF
+$master1  $lab1
+$master2  $lab2
+$master3  $lab3
+EOF
+
 #配置haproxy代理和keepalived
 #如下操作在节点lab1,lab2,lab3操作
 
 # 拉取haproxy镜像
 docker pull haproxy:1.7.8-alpine
+sleep 3
 mkdir /etc/haproxy
 cat >/etc/haproxy/haproxy.cfg<<EOF
 global
@@ -159,7 +161,7 @@ docker run -d --name my-haproxy \
 -p 1080:1080 \
 --restart always \
 haproxy:1.7.8-alpine
-
+sleep 3
 # 查看日志
 #docker logs my-haproxy
 
@@ -169,7 +171,7 @@ haproxy:1.7.8-alpine
 
 # 拉取keepalived镜像
 docker pull osixia/keepalived:1.4.4
-
+sleep 3
 # 启动
 # 载入内核相关模块
 lsmod | grep ip_vs
@@ -188,7 +190,7 @@ docker run --net=host --cap-add=NET_ADMIN \
 
 # 查看日志
 # 会看到两个成为backup 一个成为master
-docker logs k8s-keepalived
+#docker logs k8s-keepalived
 
 # 此时会配置 $vip 到其中一台机器
 # ping测试
