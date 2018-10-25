@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 ####################################
 #主机ip
-master1=192.168.145.148
-master2=192.168.145.149
-master3=192.168.145.150
+master1=192.168.145.151
+master2=192.168.145.152
+master3=192.168.145.153
 #虚拟ip
-vip=192.168.145.151
+vip=192.168.145.154
 #主机名
 lab1=`ssh $master1 hostname`
 lab2=`ssh $master2 hostname`
