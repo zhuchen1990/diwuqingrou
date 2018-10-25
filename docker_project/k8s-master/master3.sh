@@ -89,7 +89,7 @@ kubeadm alpha phase etcd local --config kubeadm-master.config
 # 如果执行失败 可以多次执行
 kubeadm config images pull --config kubeadm-master.config
 
-# 部署
+#部署
 kubeadm alpha phase kubeconfig all --config kubeadm-master.config
 kubeadm alpha phase controlplane all --config kubeadm-master.config
 kubeadm alpha phase mark-master --config kubeadm-master.config
