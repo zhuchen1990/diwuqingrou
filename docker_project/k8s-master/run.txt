@@ -1,3 +1,18 @@
 执行顺序:allNode.sh(所有节点)->master1.sh(在第一个节点执行)->master2.sh(在第二个节点执行)->master3.sh(第三个节点)->anyNode.sh(任意节点执行)
 注意事项:主机IP和网卡需要根据情况而定
+执行须知:修改所有shell脚本中的部分
+####################################
+#主机ip
+master1=192.168.145.148
+master2=192.168.145.149
+master3=192.168.145.150
+#虚拟ip
+vip=192.168.145.151
+#主机名
+lab1=`ssh $master1 hostname`
+lab2=`ssh $master2 hostname`
+lab3=`ssh $master3 hostname`
+#网卡
+interface=ens33
+###################################
 

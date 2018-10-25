@@ -39,7 +39,7 @@ apiServerCertSANs:
 
 api:
   advertiseAddress: $CP1_IP
-  controlPlaneEndpoint: $master1:8443
+  controlPlaneEndpoint: $vip:8443
 
 etcd:
   local:

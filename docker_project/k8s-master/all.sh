@@ -13,13 +13,33 @@ lab3=`ssh $master3 hostname`
 #网卡
 interface=ens33
 ###################################
-#配置host解析
+
+
+#Configure host
 cat >>/etc/hosts<<EOF
 $master1  $lab1
 $master2  $lab2
 $master3  $lab3
 EOF
 
+###########################
+#Turn off the firewall
+systemctl stop firewalld && systemctl disable firewalld
+
+#配置系统相关参数
+# 临时禁用selinux
+# 永久关闭 修改/etc/selinux/config文件设置
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+
+# 临时关闭swap
+# 永久关闭 注释/etc/fstab文件里swap相关的行
+swapoff -a
+sed -i 's/\/dev\/mapper\/centos-swap/\#\/dev\/mapper\/centos-swap/' /etc/fstab
+
+
+
+######################
 #install docker
 #Install required packages. yum-utils provides the yum-config-manager utility,
 #and device-mapper-persistent-data and lvm2 are required by the devicemapper storage driver.
@@ -37,6 +57,7 @@ sudo yum-config-manager \
 yum list docker-ce --showduplicates | sort -r
 #Install the latest version of Docker CE, or go to the next step to install a specific version
 yum install  docker-ce-selinux-17.03.1.ce-1.el7.centos -y
+
 #启动docker
 systemctl enable docker && systemctl restart docker
 
@@ -55,16 +76,8 @@ EOF
 # 安装
 yum install -y kubelet kubeadm kubectl ipvsadm
 
-#配置系统相关参数
-# 临时禁用selinux
-# 永久关闭 修改/etc/selinux/config文件设置
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-setenforce 0
 
-# 临时关闭swap
-# 永久关闭 注释/etc/fstab文件里swap相关的行
-swapoff -a
-sed -i 's/\/dev\/mapper\/centos-swap/\#\/dev\/mapper\/centos-swap/' /etc/fstab
+
 # 开启forward
 # Docker从1.13版本开始调整了默认的防火墙规则
 # 禁用了iptables filter表中FOWARD链
@@ -149,11 +162,11 @@ docker run -d --name my-haproxy \
 haproxy:1.7.8-alpine
 
 # 查看日志
-docker logs my-haproxy
+#docker logs my-haproxy
 
 # 浏览器查看状态
-http://$master1:1080/haproxy-status
-http://$master2:1080/haproxy-status
+#http://$master1:1080/haproxy-status
+#http://$master2:1080/haproxy-status
 
 # 拉取keepalived镜像
 docker pull osixia/keepalived:1.4.4
@@ -178,12 +191,12 @@ docker run --net=host --cap-add=NET_ADMIN \
 # 会看到两个成为backup 一个成为master
 docker logs k8s-keepalived
 
-# 此时会配置 11.11.11.110 到其中一台机器
+# 此时会配置 $vip 到其中一台机器
 # ping测试
-ping -c4 $vip
+#ping -c4 $vip
 # 如果失败后清理后，重新实验
 #docker rm -f k8s-keepalived
-#ip a del 11.11.11.110/32 dev eth1
+#ip a del $vip/32 dev eth1
 
 # 配置kubelet使用国内pause镜像
 # 配置kubelet的cgroups

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-#配置master
-#配置第一个master节点
-#如下操作在lab1节点操作
+
 ####################################
 #主机ip
 master1=192.168.145.148
@@ -16,9 +14,11 @@ lab3=`ssh $master3 hostname`
 #网卡
 interface=ens33
 ###################################
+
 # 生成配置文件
 CP0_IP="$master1"
 CP0_HOSTNAME="$lab1"
+
 cat >kubeadm-master.config<<EOF
 apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration

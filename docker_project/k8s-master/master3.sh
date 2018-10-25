@@ -15,6 +15,7 @@ lab3=`ssh $master3 hostname`
 #网卡
 interface=ens33
 ###################################
+
 # 生成配置文件
 CP0_IP="$master1"
 CP0_HOSTNAME="$lab1"
