@@ -22,21 +22,6 @@ $master2  $lab2
 $master3  $lab3
 EOF
 
-###########################
-#Turn off the firewall
-systemctl stop firewalld && systemctl disable firewalld
-
-#配置系统相关参数
-# 临时禁用selinux
-# 永久关闭 修改/etc/selinux/config文件设置
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
-setenforce 0
-
-# 临时关闭swap
-# 永久关闭 注释/etc/fstab文件里swap相关的行
-swapoff -a
-sed -i 's/\/dev\/mapper\/centos-swap/\#\/dev\/mapper\/centos-swap/' /etc/fstab
-
 
 
 ######################
@@ -61,6 +46,7 @@ yum install  docker-ce-selinux-17.03.1.ce-1.el7.centos -y
 #启动docker
 systemctl enable docker && systemctl restart docker
 
+
 #install kubeadm,kubelet,kubectl
 # 配置源
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
@@ -76,7 +62,20 @@ EOF
 # 安装
 yum install -y kubelet kubeadm kubectl ipvsadm
 
+###########################
+#Turn off the firewall
+systemctl stop firewalld && systemctl disable firewalld
 
+#配置系统相关参数
+# 临时禁用selinux
+# 永久关闭 修改/etc/selinux/config文件设置
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+setenforce 0
+
+# 临时关闭swap
+# 永久关闭 注释/etc/fstab文件里swap相关的行
+swapoff -a
+sed -i 's/\/dev\/mapper\/centos-swap/\#\/dev\/mapper\/centos-swap/' /etc/fstab
 
 # 开启forward
 # Docker从1.13版本开始调整了默认的防火墙规则
