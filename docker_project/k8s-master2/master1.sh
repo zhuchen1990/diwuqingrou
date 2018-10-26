@@ -1,25 +1,6 @@
 #!/usr/bin/env bash
-#配置master
-#配置第一个master节点
-#如下操作在lab1节点操作
-####################################
-#主机ip
-master1=192.168.145.154
-master2=192.168.145.155
-master3=192.168.145.156
-#虚拟ip
-vip=192.168.145.200
-#主机名
-lab1=`ssh $master1 hostname`
-lab2=`ssh $master2 hostname`
-lab3=`ssh $master3 hostname`
-#网卡
-interface=ens32
-###################################
-
-# 生成配置文件
-CP0_IP="$master1"
-CP0_HOSTNAME="$lab1"
+CP0_IP="192.168.145.154"
+CP0_HOSTNAME="master1"
 cat >kubeadm-master.config<<EOF
 apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
@@ -27,18 +8,18 @@ kubernetesVersion: v1.12.0
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 
 apiServerCertSANs:
-- "$lab1"
-- "$lab2"
-- "$lab3"
-- "$master1"
-- "$master2"
-- "$master3"
-- "$vip"
+- "master1"
+- "master2"
+- "master3"
+- "192.168.145.154"
+- "192.168.145.155"
+- "192.168.145.156"
+- "192.168.145.200"
 - "127.0.0.1"
 
 api:
   advertiseAddress: $CP0_IP
-  controlPlaneEndpoint: $vip:8443
+  controlPlaneEndpoint: 192.168.145.200:8443
 
 etcd:
   local:
@@ -67,18 +48,11 @@ kubeProxy:
     # mode: ipvs
     mode: iptables
 EOF
-
-# 提前拉取镜像
-# 如果执行失败 可以多次执行
 kubeadm config images pull --config kubeadm-master.config
-
-# 初始化
-# 注意保存返回的 join 命令
 kubeadm init --config kubeadm-master.config
 
-# 打包ca相关文件上传至其他master节点
 cd /etc/kubernetes && tar cvzf k8s-key.tgz admin.conf pki/ca.* pki/sa.* pki/front-proxy-ca.* pki/etcd/ca.*
-scp k8s-key.tgz $lab2:~/
-scp k8s-key.tgz $lab3:~/
-ssh $lab2 'tar xf k8s-key.tgz -C /etc/kubernetes/'
-ssh $lab3 'tar xf k8s-key.tgz -C /etc/kubernetes/'
+scp k8s-key.tgz 192.168.145.155:~/
+scp k8s-key.tgz 192.168.145.156:~/
+# ssh 192.168.145.155 'tar xf k8s-key.tgz -C /etc/kubernetes/'
+# ssh 192.168.145.156 'tar xf k8s-key.tgz -C /etc/kubernetes/'

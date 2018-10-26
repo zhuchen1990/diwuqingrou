@@ -1,28 +1,11 @@
 #!/usr/bin/env bash
-#配置第三个master节点
-#如下操作在lab3节点操作
-####################################
-#主机ip
-master1=192.168.145.154
-master2=192.168.145.155
-master3=192.168.145.156
-#虚拟ip
-vip=192.168.145.200
-#主机名
-lab1=`ssh $master1 hostname`
-lab2=`ssh $master2 hostname`
-lab3=`ssh $master3 hostname`
-#网卡
-interface=ens32
-###################################
 
-# 生成配置文件
-CP0_IP="$master1"
-CP0_HOSTNAME="$lab1"
-CP1_IP="$master2"
-CP1_HOSTNAME="$lab2"
-CP2_IP="$master3"
-CP2_HOSTNAME="$lab3"
+CP0_IP="192.168.145.154"
+CP0_HOSTNAME="master1"
+CP1_IP="192.168.145.155"
+CP1_HOSTNAME="master2"
+CP2_IP="192.168.145.156"
+CP2_HOSTNAME="master3"
 
 cat >kubeadm-master.config<<EOF
 apiVersion: kubeadm.k8s.io/v1alpha2
@@ -31,18 +14,18 @@ kubernetesVersion: v1.12.0
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 
 apiServerCertSANs:
-- "$lab1"
-- "$lab2"
-- "$lab3"
-- "$master1"
-- "$master2"
-- "$master3"
-- "$vip"
+- "master1"
+- "master2"
+- "master3"
+- "192.168.145.154" 
+- "192.168.145.155"
+- "192.168.145.156"
+- "192.168.145.200"
 - "127.0.0.1"
 
 api:
   advertiseAddress: $CP2_IP
-  controlPlaneEndpoint: $vip:8443
+  controlPlaneEndpoint: 192.168.145.200:8443
 
 etcd:
   local:
