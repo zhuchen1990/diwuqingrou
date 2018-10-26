@@ -108,6 +108,11 @@ spec:
       - key: node-role.kubernetes.io/master
         operator: Exists
         effect: NoSchedule
+      #1.12版本需要添加,不然会报错
+      - key: node.kubernetes.io/not-ready
+        operator: Exists
+        effect: NoSchedule
+      ###
       serviceAccountName: flannel
       initContainers:
       - name: install-cni

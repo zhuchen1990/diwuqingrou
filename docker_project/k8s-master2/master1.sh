@@ -54,5 +54,5 @@ kubeadm init --config kubeadm-master.config
 cd /etc/kubernetes && tar cvzf k8s-key.tgz admin.conf pki/ca.* pki/sa.* pki/front-proxy-ca.* pki/etcd/ca.*
 scp k8s-key.tgz 192.168.145.155:~/
 scp k8s-key.tgz 192.168.145.156:~/
-# ssh 192.168.145.155 'tar xf k8s-key.tgz -C /etc/kubernetes/'
-# ssh 192.168.145.156 'tar xf k8s-key.tgz -C /etc/kubernetes/'
+ssh 192.168.145.155 'tar xf k8s-key.tgz -C /etc/kubernetes/'
+ssh 192.168.145.156 'tar xf k8s-key.tgz -C /etc/kubernetes/'
