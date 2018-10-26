@@ -1,63 +1,18 @@
 #!/usr/bin/env bash
 ####################################
 #主机ip
-master1=192.168.145.151
-master2=192.168.145.152
-master3=192.168.145.153
+master1=192.168.145.154
+master2=192.168.145.155
+master3=192.168.145.156
 #虚拟ip
-vip=192.168.145.154
+vip=192.168.145.200
 #主机名
-lab1=`ssh $master1 hostname`
-lab2=`ssh $master2 hostname`
-lab3=`ssh $master3 hostname`
+lab1=master1
+lab2=master2
+lab3=master3
 #网卡
-interface=ens33
+interface=ens32
 ###################################
-
-
-
-###########################
-#Turn off the firewall
-systemctl stop firewalld && systemctl disable firewalld
-
-######################
-#install docker
-#Install required packages. yum-utils provides the yum-config-manager utility,
-#and device-mapper-persistent-data and lvm2 are required by the devicemapper storage driver.
-sudo yum install -y yum-utils \
-  device-mapper-persistent-data \
-  lvm2
-#Use the following command to set up the stable repository. You always need the stable repository,
-#even if you want to install builds from the edge or test repositories as well.
-sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-#To install a specific version of Docker CE, list the available versions in the repo, then select and install:
-#a. List and sort the versions available in your repo. This example sorts results by version number, highest to lowest,
-#and is truncated:
-yum list docker-ce --showduplicates | sort -r
-#Install the latest version of Docker CE, or go to the next step to install a specific version
-yum install  docker-ce-selinux-17.03.1.ce-1.el7.centos -y
-
-#启动docker
-systemctl enable docker && systemctl restart docker
-
-
-#install kubeadm,kubelet,kubectl
-# 配置源
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF
-
-# 安装
-yum install -y kubelet kubeadm kubectl ipvsadm
-
 
 
 #配置系统相关参数
@@ -106,7 +61,7 @@ EOF
 #如下操作在节点lab1,lab2,lab3操作
 
 # 拉取haproxy镜像
-docker pull haproxy:1.7.8-alpine
+
 sleep 3
 mkdir /etc/haproxy
 cat >/etc/haproxy/haproxy.cfg<<EOF
@@ -170,7 +125,7 @@ sleep 3
 #http://$master2:1080/haproxy-status
 
 # 拉取keepalived镜像
-docker pull osixia/keepalived:1.4.4
+
 sleep 3
 # 启动
 # 载入内核相关模块

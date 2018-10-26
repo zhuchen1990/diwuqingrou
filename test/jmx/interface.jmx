@@ -275,8 +275,8 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">6000</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">800</stringProp>
+        <stringProp name="ThreadGroup.num_threads">80</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">10</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
@@ -389,7 +389,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="regpoolId" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">5460ea3f8f4e498d81f0e6f03ba08a21</stringProp>
+                <stringProp name="Argument.value">f692b1c905b347c4be9c3ad34635bd56</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">regpoolId</stringProp>

@@ -2,17 +2,17 @@
 
 ####################################
 #主机ip
-master1=192.168.145.151
-master2=192.168.145.152
-master3=192.168.145.153
+master1=192.168.145.154
+master2=192.168.145.155
+master3=192.168.145.156
 #虚拟ip
-vip=192.168.145.154
+vip=192.168.145.200
 #主机名
-lab1=`ssh $master1 hostname`
-lab2=`ssh $master2 hostname`
-lab3=`ssh $master3 hostname`
+lab1=master1
+lab2=master2
+lab3=master3
 #网卡
-interface=ens33
+interface=ens32
 ###################################
 
 # 生成配置文件
