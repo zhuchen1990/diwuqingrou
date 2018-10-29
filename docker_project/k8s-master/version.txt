@@ -1,0 +1,29 @@
+简介
+在部署kubernetes时，要求master node和worker node上的版本保持一致，否则会出现版本不匹配导致奇怪的问题出现。本文将介绍如何在CentOS系统上，使用yum安装指定版本的Kubernetes。
+
+步骤
+在使用yum安装kubernetes前，需要配置仓库源，可以使用阿里云的镜像：
+
+cat >>/etc/yum.repos.d/kubernetes.repo<<EOF
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+
+通常我们使用下面的命令来安装kubernetes：
+yum install -y kubelet kubeadm kubectl
+但使用此命令有一个问题，由于有新的版本发布到仓库中，可能后期部署的版本跟之前的不一致。我在部署过程中，遇到过类似问题
+
+因此，我们需要安装指定版本的kubernetes。那么如何做呢？在进行yum安装时，可以使用下列的格式来进行安装：
+
+yum install -y kubelet-<version> kubectl-<version> kubeadm-<version>
+例如，如果需要安装v1.11.3版本的kubernetes，使用下列命令即可：
+
+sudo yum install -y kubelet-1.11.3 kubeadm-1.11.3 kubectl-1.11.3
+
+通过这种方式，我们就保证各个node上版本的一致性，避免出现一些版本兼容性导致的问题。

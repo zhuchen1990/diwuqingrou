@@ -20,11 +20,11 @@ CP1_IP="$master2"
 CP1_HOSTNAME="$lab2"
 CP2_IP="$master3"
 CP2_HOSTNAME="$lab3"
-
+kubernetesVersion=v1.12.0
 cat >kubeadm-master.config<<EOF
 apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
-kubernetesVersion: v1.12.0
+kubernetesVersion: $kubernetesVersion
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 
 apiServerCertSANs:

@@ -18,11 +18,11 @@ interface=ens32
 # 生成配置文件
 CP0_IP="$master1"
 CP0_HOSTNAME="$lab1"
-
+kubernetesVersion=v1.12.0
 cat >kubeadm-master.config<<EOF
 apiVersion: kubeadm.k8s.io/v1alpha2
 kind: MasterConfiguration
-kubernetesVersion: v1.12.0
+kubernetesVersion: $kubernetesVersion
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 
 apiServerCertSANs:
