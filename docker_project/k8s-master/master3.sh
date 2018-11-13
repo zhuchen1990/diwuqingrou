@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 ####################################
 #主机ip
-master1=7.0.0.50
-master2=7.0.0.51
-master3=7.0.0.52
+master1=7.0.0.60
+master2=7.0.0.61
+master3=7.0.0.62
 #虚拟ip
-vip=7.0.0.53
+vip=7.0.0.63
 #主机名
 lab1=node1
 lab2=node2
