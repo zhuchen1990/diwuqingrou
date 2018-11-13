@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 ####################################
 #主机ip
-master1=192.168.145.154
-master2=192.168.145.155
-master3=192.168.145.156
+master1=7.0.0.50
+master2=7.0.0.51
+master3=7.0.0.52
 #虚拟ip
-vip=192.168.145.200
+vip=7.0.0.53
 #主机名
-lab1=master1
-lab2=master2
-lab3=master3
+lab1=node1
+lab2=node2
+lab3=node3
 #网卡
 interface=ens32
 ################################
@@ -25,7 +25,7 @@ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 
-yum install  docker-ce -y
+yum install  docker-ce-18.06.0.ce  -y
 
 systemctl enable docker && systemctl restart docker
 
@@ -89,6 +89,7 @@ EOF
 
 # 拉取haproxy镜像
 docker pull haproxy:1.7.8-alpine
+
 sleep 1
 mkdir /etc/haproxy
 cat >/etc/haproxy/haproxy.cfg<<EOF

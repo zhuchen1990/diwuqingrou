@@ -2,15 +2,15 @@
 
 ####################################
 #主机ip
-master1=192.168.145.154
-master2=192.168.145.155
-master3=192.168.145.156
+master1=7.0.0.50
+master2=7.0.0.51
+master3=7.0.0.52
 #虚拟ip
-vip=192.168.145.200
+vip=7.0.0.53
 #主机名
-lab1=master1
-lab2=master2
-lab3=master3
+lab1=node1
+lab2=node2
+lab3=node3
 #网卡
 interface=ens32
 ###################################
