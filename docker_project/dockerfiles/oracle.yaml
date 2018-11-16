@@ -1,0 +1,20 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: deploy-oracle-11g
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: oracle-11g
+  template:
+    metadata:
+      labels:
+        app: oracle-11g
+    spec:
+      containers:
+      - name: oracle-11g
+        image: wnameless/oracle-xe-11g
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 1521
