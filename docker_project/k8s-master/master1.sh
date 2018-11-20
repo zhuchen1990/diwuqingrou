@@ -81,3 +81,9 @@ scp k8s-key.tgz $lab2:~/
 scp k8s-key.tgz $lab3:~/
 ssh $lab2 'tar xf k8s-key.tgz -C /etc/kubernetes/'
 ssh $lab3 'tar xf k8s-key.tgz -C /etc/kubernetes/'
+
+cd /etc/kubernetes && tar cvzf k8s-key.tgz admin.conf pki/ca.* pki/sa.* pki/front-proxy-ca.* pki/etcd/ca.*
+scp k8s-key.tgz 192.168.231.133:~/
+scp k8s-key.tgz 192.168.231.134:~/
+ssh 192.168.231.133 'tar xf k8s-key.tgz -C /etc/kubernetes/'
+ssh 192.168.231.134 'tar xf k8s-key.tgz -C /etc/kubernetes/'

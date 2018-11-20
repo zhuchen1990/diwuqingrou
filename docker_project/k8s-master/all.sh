@@ -53,6 +53,7 @@ setenforce 0
 
 # 临时关闭swap
 # 永久关闭 注释/etc/fstab文件里swap相关的行
+
 swapoff -a
 sed -i 's/\/dev\/mapper\/centos-swap/\#\/dev\/mapper\/centos-swap/' /etc/fstab
 
